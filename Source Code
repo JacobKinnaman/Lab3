@@ -1,0 +1,49 @@
+import java.io.*;
+import java.util.ArrayList;
+public class LabThree{
+
+    public static void main(String []args){
+        SortedList alphaList = new SortedList();
+        alphaList.sort(); //sorts array alphabetically
+        FileWriter file = new FileWriter("labThreeOutput.txt"); //creates output file
+        PrintWriter pw = new PrintWriter(file);
+            for(int i = 0; i < alphaList.size(); i++){    //prints arraylist
+                pw.print(alphaList.get(i));
+            }
+        }
+}
+        
+class SortedList{
+    ArrayList <String> artists = new ArrayList<String>();
+    
+    public SortedList(){
+    }
+    
+    public ArrayList<String> getArtists() {
+        String line;
+	    try{                        
+		BufferedReader br = new BufferedReader(new FileReader("SpotifyArtists.csv")); // Openfile
+		
+		while ((line = br.readLine())!= null) {
+			String[] line = line.split(","); // separates each line into an array 
+			line[0] = line[1];
+			line[1] = line[2];
+			line[2] = line[3];
+			line[3] = line[4];
+		    artists.add(line);  //puts array with artists name first in arraylist
+		    }
+	    } // catching Exceptions
+	catch (FileNotFoundException e) {
+		System.out.println("ERROR: File not found " + "SpotifyArtists.csv");
+	}
+	catch (IOException e) {
+		System.out.println("ERROR: Could not read " + "SpotifyArtists.csv");
+	}
+	return artists;
+    }
+    //sort
+    public ArrayList<String> sort(){
+        artists.sort();
+        return artists;
+    }
+}
